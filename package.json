@@ -1,0 +1,17 @@
+{
+  "name": "co_cli_test",
+  "version": "0.0.2",
+  "description": "co cli test npm package",
+  "main": "index.js",
+  "scripts": {
+    "test": "index.js"
+  },
+  "bin": {
+    "co-test": "./index.js"
+  },
+  "author": "pay",
+  "license": "ISC",
+  "dependencies": {
+    "child-process-promise": "^1.1.0"
+  }
+}
