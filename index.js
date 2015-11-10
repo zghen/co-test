@@ -3,7 +3,7 @@ var fs = require('fs');
 var util = require('util');
 var log_file = fs.createWriteStream('co-test.log', {flags : 'w'});
 var log_stdout = process.stdout;
-var exec = require('child_process').exec;
+var exec = require('exec-as-promised')();
 var coV = 'co -V',
 	coH = 'co -h',
 	coInit = 'co init',
@@ -12,17 +12,24 @@ var coV = 'co -V',
 	coDebug = 'co debug',
 	coSlide = 'co slide slider --nocss',
 	coBuild = 'co build --clm spa' /*&& co build --clm irep && co build --clm viseven && co build --clm mitouch && co build --clm iplanner'*/,
-	coWhoami = 'co whoami';
+	coWhoami = 'co -whoami';
 
-	/*coVersion = exec(coV, function(error, stdout, stderr, stdin) {
+
+
+	exec('co -V')
+		.then( function (stdout){
+			console.log(stdout);
+		})
+		.then(function coWhoami(){
+			console.log(stdout);
+		}); 
+	
+
+/*	coHelp = exec(coH, function(error, stdout, stdin, stderr) {
 		console.log(stdout);
-	});
+	});*/
 
-	coHelp = exec(coH, function(error, stdout, stdin, stderr) {
-		console.log(stdout);
-	});
-
-	coWhoami = exec(coWhoami, function(error, stdout, stdin, stderr) {
+/*	var coWhoami = exec(coWhoami, function(error, stdout, stdin, stderr) {
 		console.log(stdout);
 	});*/
 
@@ -42,7 +49,7 @@ var coV = 'co -V',
 	});*/
 
 
-	var childInit = exec(coInit, function(error, stdout, stderr, stdin) {
+/*	var childInit = exec(coInit, function(error, stdout, stderr, stdin) {
 			console.log(stdout);
 	});
 	
@@ -57,7 +64,7 @@ var coV = 'co -V',
 			}, 100);
 		}
 		childInit.stdout.pipe(process.stdout);
-		});
+		});*/
 
 
 
