@@ -3,7 +3,7 @@ var fs = require('fs');
 var util = require('util');
 var log_file = fs.createWriteStream('co-test.log', {flags : 'w'});
 var log_stdout = process.stdout;
-var exec = require('child-process-promise').exec;
+var exec = require('child_process').exec;
 var coV = 'co -V',
 	coH = 'co -h',
 	coInit = 'co init',
@@ -41,11 +41,26 @@ var coV = 'co -V',
 		console.log(stdout);
 	});*/
 
-	var childInit = exec(coInit, function(error, stdout, stderr, stdin) {
-		console.log(stdout);
-	});
 
-	childInit.stdout.pipe(process.stdout);
+	var childInit = exec(coInit, function(error, stdout, stderr, stdin) {
+			console.log(stdout);
+	});
+	
+	
+	exec(childInit, function(error, stdout, stderr, stdin) 
+		{
+			console.log('WAIT');
+			for (var i = 0; i < 3; i++) {
+				setTimeout(function() {
+				childInit.stdin.write('\n');
+				
+			}, 100);
+		}
+		childInit.stdout.pipe(process.stdout);
+		});
+
+
+
 	
 
 /*	exec(coLogin, function(error, stdout, stderr, stdin) {
