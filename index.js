@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 var fs = require('fs');
 var util = require('util');
+var Promise = require("bluebird");
 var log_file = fs.createWriteStream('co-test.log', {flags : 'w'});
 var log_stdout = process.stdout;
-var exec = require('exec-as-promised')();
+var exec = require('child_process').exec;
 var coV = 'co -V',
 	coH = 'co -h',
 	coInit = 'co init',
@@ -15,14 +16,24 @@ var coV = 'co -V',
 	coWhoami = 'co -whoami';
 
 
+	var coZ = function() {
+		exec(coV, function(error, stdout, stdin, stderr) {
+			console.log(stdout);
+		});
+	};
 
-	exec('co -V')
-		.then( function (stdout){
+
+		
+	coZ();
+	
+
+/*	coZ.then( function (){
+			console.log('2');
+		});*/
+/*		.then(function (stdout){
+			exec('co -V')
 			console.log(stdout);
-		})
-		.then(function coWhoami(){
-			console.log(stdout);
-		}); 
+		});*/ 
 	
 
 /*	coHelp = exec(coH, function(error, stdout, stdin, stderr) {
@@ -83,7 +94,7 @@ var coV = 'co -V',
 		console.log(stdout);
 	});*/
 
-	console.log = function(d) { 
+/*	console.log = function(d) { 
   			log_file.write(util.format(d) + '\n');
   			log_stdout.write(util.format(d) + '\n');
-		};
+		};*/

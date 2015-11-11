@@ -12,6 +12,7 @@
   "author": "pay",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.0.5",
     "child-process-promise": "^1.1.0"
   }
 }
