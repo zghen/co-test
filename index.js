@@ -10,9 +10,9 @@ var exec = require('child_process').exec;
 		.then(function(){
 			return execPromise('co -V');
 		})
-/*		.then(function(){
+		.then(function(){
 			return execInit();
-		})*/
+		})
 		.then(function(){
 			return execPromise('co slide');
 		})
@@ -33,20 +33,26 @@ var exec = require('child_process').exec;
 	}
 
 
-/*	function execInit(){
+	function execInit(){
 		return new Promise(function(resolve, reject){
-			var childInit = exec('co init', function(error, stdout, stderr, stdin) {
-				console.log(stdout);
-			});
+			var childInit = exec('co debug --live');
 
-			exec(childInit, function(err, stdout, stderr, stdin) { // TODO: Parse test.json and add name, clm and lang from there
-				childInit.stdin.write('name' + '\n');
-				childInit.stdin.write('en' + '\n');
-				childInit.stdin.write('spa' + '\n');
-				childInit.stdout.pipe(process.stdout);
-				});
+			// TODO: Parse test.json and add name, clm and lang from there
+			childInit.stdin.write('name' + '\n');
+			childInit.stdin.write('en' + '\n');
+			childInit.stdin.write('spa' + '\n');
+			childInit.stdout.on('data', function(data) {
+    			console.log('stdout: ' + data);
+			});
+			childInit.stderr.on('data', function(data) {
+    			console.log('stdout: ' + data);
+			});
+			childInit.on('close', function(code) {
+    			console.log('closing code: ' + code);
+			});
+			/*childInit.stdout.pipe(process.stdout);*/
 		});
-	}*/
+	}
 
 	console.log = function(d) { 
   			log_file.write(util.format(d) + '\n');
